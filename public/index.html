@@ -1,0 +1,1059 @@
+<title>Bindery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap">
+
+<style>
+  :root {
+    --bg: #F6F2E8;
+    --surface: #FFFFFF;
+    --surface2: #EEE9D8;
+    --border: #DDD8C4;
+    --text: #1A1829;
+    --text2: #5A5470;
+    --text3: #9A94B4;
+    --accent: #C4793E;
+    --accent-hover: #A8632A;
+    --accent-text: #FFFFFF;
+    --success: #4A9E7A;
+    --error: #C4445A;
+    --warn: #B07040;
+    --log-bg: #1A1829;
+    --log-text: #C8C2E8;
+    --log-ok: #6EC89A;
+    --log-err: #F08098;
+    --log-info: #88AAEE;
+    --log-warn: #E8C068;
+    --shadow: 0 2px 12px rgba(30,20,60,0.08);
+    --shadow-lg: 0 8px 32px rgba(30,20,60,0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12111F;
+      --surface: #1C1B2E;
+      --surface2: #252338;
+      --border: #2E2B44;
+      --text: #EAE6F8;
+      --text2: #9A94B4;
+      --text3: #5A5478;
+      --accent: #D4884A;
+      --accent-hover: #E09A5E;
+      --accent-text: #FFFFFF;
+      --success: #5ABE8E;
+      --error: #E0607A;
+      --warn: #D09050;
+      --log-bg: #0E0D1A;
+      --log-text: #C8C2E8;
+      --log-ok: #6EC89A;
+      --log-err: #F08098;
+      --log-info: #88AAEE;
+      --log-warn: #E8C068;
+      --shadow: 0 2px 12px rgba(0,0,0,0.3);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #12111F;
+    --surface: #1C1B2E;
+    --surface2: #252338;
+    --border: #2E2B44;
+    --text: #EAE6F8;
+    --text2: #9A94B4;
+    --text3: #5A5478;
+    --accent: #D4884A;
+    --accent-hover: #E09A5E;
+    --accent-text: #FFFFFF;
+    --success: #5ABE8E;
+    --error: #E0607A;
+    --warn: #D09050;
+    --log-bg: #0E0D1A;
+    --log-text: #C8C2E8;
+    --log-ok: #6EC89A;
+    --log-err: #F08098;
+    --log-info: #88AAEE;
+    --log-warn: #E8C068;
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-inline: 20px;
+    padding-block: 48px;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Header */
+  .header { margin-bottom: 8px; }
+  .logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 20px; height: 20px; fill: white; }
+  .tagline {
+    color: var(--text2);
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin-top: 4px;
+    padding-left: 46px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  /* Input group */
+  .input-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  .input-row {
+    display: flex;
+    gap: 8px;
+  }
+  input[type="text"], input[type="password"] {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.15s;
+    min-width: 0;
+  }
+  input[type="text"]:focus, input[type="password"]:focus {
+    border-color: var(--accent);
+  }
+  input::placeholder { color: var(--text3); }
+
+  .btn {
+    padding: 10px 20px;
+    background: var(--accent);
+    color: var(--accent-text);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, opacity 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover:not(:disabled) { background: var(--accent-hover); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn.secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn.secondary:hover:not(:disabled) { background: var(--border); }
+  .btn.success {
+    background: var(--success);
+  }
+
+  .btn-icon { width: 16px; height: 16px; }
+
+  /* Supported sites */
+  .sites {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .site-chip {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .site-chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Advanced toggle */
+  .adv-toggle {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+  }
+  .adv-toggle:hover { color: var(--text); }
+  .adv-panel {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .adv-panel[hidden] { display: none; }
+
+  /* Book info card */
+  .book-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .book-cover {
+    width: 80px;
+    aspect-ratio: 2/3;
+    border-radius: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .book-cover img { width: 100%; height: 100%; object-fit: cover; }
+  .book-cover-placeholder {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--text3);
+  }
+  .book-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-wrap: balance;
+    margin-bottom: 4px;
+  }
+  .book-author { color: var(--text2); font-size: 0.85rem; margin-bottom: 8px; }
+  .book-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .meta-pill {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .meta-pill.highlight {
+    background: rgba(196,121,62,0.12);
+    color: var(--accent);
+    border-color: rgba(196,121,62,0.3);
+  }
+  .book-desc {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--text2);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .book-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  /* Progress */
+  .progress-bar-wrap {
+    background: var(--surface2);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .progress-bar {
+    background: var(--accent);
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 0.78rem;
+    color: var(--text2);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Log */
+  .log-box {
+    background: var(--log-bg);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', monospace;
+    font-size: 0.77rem;
+    line-height: 1.6;
+    max-height: 220px;
+    overflow-y: auto;
+    color: var(--log-text);
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+  .log-line { display: block; }
+  .log-line.ok { color: var(--log-ok); }
+  .log-line.err { color: var(--log-err); }
+  .log-line.warn { color: var(--log-warn); }
+  .log-line.info { color: var(--log-info); }
+
+  /* Theme toggle */
+  .theme-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text2);
+    transition: color 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .theme-btn:hover { color: var(--text); }
+  .theme-btn svg { width: 18px; height: 18px; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    .book-card { grid-template-columns: 60px 1fr; gap: 12px; }
+    .book-cover { width: 60px; }
+    .input-row { flex-direction: column; }
+  }
+</style>
+
+<button class="theme-btn" id="themeBtn" title="Toggle theme">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+</button>
+
+<div class="wrap">
+  <header class="header">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm3 7h6M9 12h6M9 15h4"/></svg>
+      </div>
+      Bindery
+    </div>
+    <p class="tagline">Paste a novel URL. Download an EPUB.</p>
+  </header>
+
+  <!-- Input card -->
+  <div class="card">
+    <label class="input-label" for="urlInput">Book URL</label>
+    <div class="input-row">
+      <input type="text" id="urlInput" placeholder="https://zenithtls.com/series/…" autocomplete="off" spellcheck="false"/>
+      <button class="btn" id="lookupBtn" onclick="lookupBook()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Look up
+      </button>
+    </div>
+
+    <div class="sites">
+      <span class="site-chip" id="chip-zenithtls">zenithtls.com</span>
+      <span class="site-chip" id="chip-peachtea">peachtea.agency</span>
+      <span class="site-chip">more coming</span>
+    </div>
+
+    <button class="adv-toggle" onclick="toggleAdvanced()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <span id="advLabel">Advanced options</span>
+    </button>
+
+    <div class="adv-panel" id="advPanel" hidden>
+      <div>
+        <label class="input-label" for="proxyInput">CORS proxy URL</label>
+        <input type="text" id="proxyInput" value="https://corsproxy.io/?" placeholder="https://corsproxy.io/?"/>
+        <p style="font-size:0.72rem;color:var(--text3);margin-top:4px;">Appended before each URL. Default: corsproxy.io</p>
+      </div>
+      <div>
+        <label class="input-label" for="authInput">Auth token (peachtea.agency)</label>
+        <input type="password" id="authInput" placeholder="Bearer eyJ…"/>
+        <p style="font-size:0.72rem;color:var(--text3);margin-top:4px;">DevTools → Network → any /api/ call → Authorization header</p>
+      </div>
+      <div>
+        <label class="input-label" for="delayInput">Delay between chapters (ms)</label>
+        <input type="text" id="delayInput" value="350" style="max-width:100px;"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Book info (hidden until lookup) -->
+  <div class="card hidden" id="bookCard">
+    <div class="book-card">
+      <div class="book-cover" id="coverEl">
+        <span class="book-cover-placeholder">📖</span>
+      </div>
+      <div>
+        <div class="book-title" id="bookTitle">—</div>
+        <div class="book-author" id="bookAuthor">—</div>
+        <div class="book-meta" id="bookMeta"></div>
+        <div class="book-desc" id="bookDesc"></div>
+      </div>
+    </div>
+    <div class="book-actions">
+      <button class="btn" id="downloadBtn" onclick="startDownload()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download EPUB
+      </button>
+      <button class="btn secondary" onclick="resetAll()">Clear</button>
+    </div>
+  </div>
+
+  <!-- Progress (hidden until downloading) -->
+  <div class="card hidden" id="progressCard">
+    <div class="progress-label">
+      <span id="progressText">Fetching chapters…</span>
+      <span id="progressCount">0 / 0</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="log-box" id="logBox"></div>
+    <div style="margin-top:12px;display:flex;gap:8px;">
+      <button class="btn success hidden" id="saveBtn" onclick="saveEpub()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save EPUB
+      </button>
+      <button class="btn secondary hidden" id="stopBtn" onclick="stopFetching()">Stop</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let bookInfo = null;
+let fetchedChapters = [];
+let isFetching = false;
+let shouldStop = false;
+let epubBlob = null;
+
+// ─── THEME ──────────────────────────────────────────────────────────────────
+const root = document.documentElement;
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = root.getAttribute('data-theme');
+  if (!cur) {
+    const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', sysDark ? 'light' : 'dark');
+  } else {
+    root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  }
+});
+
+// ─── UI HELPERS ──────────────────────────────────────────────────────────────
+function toggleAdvanced() {
+  const panel = document.getElementById('advPanel');
+  const label = document.getElementById('advLabel');
+  const open = !panel.hidden;
+  panel.hidden = open;
+  label.textContent = open ? 'Advanced options' : 'Hide options';
+}
+
+function log(msg, type = 'info') {
+  const box = document.getElementById('logBox');
+  const line = document.createElement('span');
+  line.className = `log-line ${type}`;
+  const prefix = { ok: '✓', err: '✗', warn: '!', info: '·' }[type] || '·';
+  line.textContent = `${prefix} ${msg}`;
+  box.appendChild(line);
+  box.appendChild(document.createElement('br'));
+  box.scrollTop = box.scrollHeight;
+}
+
+function setProgress(cur, total) {
+  const pct = total > 0 ? (cur / total) * 100 : 0;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+  document.getElementById('progressCount').textContent = `${cur} / ${total}`;
+}
+
+function setProgressText(txt) {
+  document.getElementById('progressText').textContent = txt;
+}
+
+function showCard(id) { document.getElementById(id).classList.remove('hidden'); }
+function hideCard(id) { document.getElementById(id).classList.add('hidden'); }
+
+function setChips(site) {
+  ['zenithtls', 'peachtea'].forEach(s => {
+    document.getElementById(`chip-${s}`).classList.toggle('active', s === site);
+  });
+}
+
+// ─── PROXY ───────────────────────────────────────────────────────────────────
+function getProxy() {
+  return document.getElementById('proxyInput').value.trim() || 'https://corsproxy.io/?';
+}
+
+function getDelay() {
+  return parseInt(document.getElementById('delayInput').value) || 350;
+}
+
+function getAuthToken() {
+  return document.getElementById('authInput').value.trim();
+}
+
+async function proxyFetch(url, opts = {}) {
+  const proxy = getProxy();
+  const proxied = proxy + encodeURIComponent(url);
+  const response = await fetch(proxied, opts);
+  if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
+  return response;
+}
+
+async function proxyJson(url, headers = {}) {
+  const resp = await proxyFetch(url, { headers });
+  return resp.json();
+}
+
+async function proxyText(url, headers = {}) {
+  const resp = await proxyFetch(url, { headers });
+  return resp.text();
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+const FALLBACK_PROXIES=['https://api.allorigins.win/raw?url=','https://corsproxy.io/?','https://api.codetabs.com/v1/proxy?quest='];
+async function ztFetch(url,asJson=false){
+  try{const r=await fetch(url,{credentials:'include'});if(r.ok)return asJson?r.json():r.text();}catch(_){}
+  const up=getProxy();const proxies=[up,...FALLBACK_PROXIES.filter(x=>x!==up)];
+  let err;for(const pr of proxies){try{const r=await fetch(pr+encodeURIComponent(url));if(r.ok){log('Proxy ok','info');return asJson?r.json():r.text();}err=new Error('HTTP '+r.status);}catch(e){err=e;}}
+  throw err||new Error('All proxies failed');
+}
+
+// ─── SITE DETECTION ──────────────────────────────────────────────────────────
+function detectSite(url) {
+  if (/zenithtls\.com/i.test(url)) return 'zenithtls';
+  if (/peachtea\.agency/i.test(url)) return 'peachtea';
+  return 'generic';
+}
+
+// ─── ZENITHTLS PARSER ────────────────────────────────────────────────────────
+async function ztFetchBookInfo(url) {
+  const id = url.split('/').pop().replace(/#.*$/, '');
+  log(`Novel ID: ${id}`, 'info');
+
+  const [chapters, meta] = await Promise.all([
+    ztFetch(`https://zenithtls.com/api/chapter?novelId=${id}&limit=9999&page=1`,true),
+    ztFetch(`https://zenithtls.com/api/novels/${id}`,true)
+  ]);
+
+  const free = (chapters.chapters || []).filter(c => c.price === 0 || c.price == null);
+
+  return {
+    site: 'zenithtls',
+    title: meta.title || 'Unknown Title',
+    author: meta.translator?.username || 'Unknown Translator',
+    description: meta.synopsis || '',
+    coverUrl: meta.cover?.url ? `https://zenithtls.com/${meta.cover.url}` : null,
+    tags: (meta.tags || []).join(', '),
+    chapterCount: free.length,
+    total: chapters.total,
+    chapters: free.map(c => ({
+      id: c.id,
+      title: c.title || `Chapter ${c.chapterNumber}`,
+      url: `https://zenithtls.com/chapter/${c.id}`
+    }))
+  };
+}
+
+function parseNextjsScript(scriptText) {
+  let json;
+  const objMatch = scriptText.match(/\{[\s\S]*\}/);
+  if (objMatch) {
+    let raw = objMatch[0];
+    // The parser strips backslash sequences before parsing
+    raw = raw.replace(/\\\\\\\"/g, '\x00QUOT\x00');
+    raw = raw.replace(/\\/g, '');
+    raw = raw.replace(/\x00QUOT\x00/g, '\\"');
+    json = JSON.parse(raw);
+    json._fmt = 'obj';
+  } else {
+    const arrMatch = scriptText.match(/\[[\s\S]*\]/);
+    if (!arrMatch) throw new Error('no JSON');
+    json = JSON.parse(arrMatch[0]);
+    json._fmt = 'arr';
+  }
+  return json;
+}
+
+async function ztFetchChapter(chapterUrl) {
+  const html = await ztFetch(chapterUrl,false);
+  const dom = new DOMParser().parseFromString(html, 'text/html');
+
+  const MARKER = 'self.__next_f.push(';
+  const scripts = [...dom.querySelectorAll('script')]
+    .map(s => s.textContent)
+    .filter(s => s.includes(MARKER));
+
+  const parsed = [];
+  let maxLen = 0, maxIdx = 0;
+
+  for (const sc of scripts) {
+    try {
+      const j = parseNextjsScript(sc);
+      if (sc.length > maxLen) { maxLen = sc.length; maxIdx = parsed.length; }
+      parsed.push(j);
+    } catch {}
+  }
+
+  if (parsed.length === 0) throw new Error('Could not parse Next.js data');
+
+  const main = parsed[maxIdx];
+
+  if (main._fmt === 'arr') {
+    // Backslash/array format: find title from sibling objects
+    let title = '';
+    for (const p of parsed) {
+      try { title = p.chapter?.title?.trim() || title; } catch {}
+    }
+    const key = main[0];
+    const raw = main[key] || '';
+    const lines = raw.replace(/\n\n+/g, '\n').split('\n').filter(l => l.trim());
+    return { title, paragraphs: lines.filter(l => l !== title) };
+  } else {
+    // Object format
+    const title = main.chapter?.title || '';
+    const children = main.chapter?.content?.root?.children || [];
+    const paragraphs = children
+      .filter(c => c.direction != null)
+      .map(c => (c.children || []).map(t => t.text || '').join(''));
+    return { title, paragraphs };
+  }
+}
+
+// ─── PEACHTEA PARSER ─────────────────────────────────────────────────────────
+async function ptFetchBookInfo(url) {
+  const id = url.match(/\/books\/(\d+)/)?.[1];
+  if (!id) throw new Error('Could not extract book ID from URL');
+
+  const auth = getAuthToken();
+  if (!auth) throw new Error('peachtea.agency requires an auth token. Add it in Advanced options.');
+
+  const headers = { Authorization: auth.startsWith('Bearer') ? auth : `Bearer ${auth}` };
+
+  const meta = await proxyJson(`https://peachtea.agency/api/books/${id}`, headers);
+  const book = meta.body || meta;
+
+  const chaptersResp = await proxyJson(`https://peachtea.agency/api/books/${id}/chapters`, headers);
+  const chapters = chaptersResp.body || chaptersResp.chapters || chaptersResp || [];
+
+  return {
+    site: 'peachtea',
+    title: book.title || 'Unknown',
+    author: book.author || book.translator || 'Unknown',
+    description: book.description || book.synopsis || '',
+    coverUrl: book.coverUrl || book.cover || null,
+    chapterCount: chapters.length,
+    total: chapters.length,
+    chapters: chapters.map((c, i) => ({
+      id: c.id || i,
+      title: c.title || `Chapter ${i + 1}`,
+      url: `https://peachtea.agency/api/books/${id}/chapters/${c.id || i}`
+    }))
+  };
+}
+
+async function ptFetchChapter(url) {
+  const auth = getAuthToken();
+  const headers = auth ? { Authorization: auth.startsWith('Bearer') ? auth : `Bearer ${auth}` } : {};
+  const data = await proxyJson(url, headers);
+  const ch = data.body || data;
+  const content = ch.content || ch.body || '';
+  const paragraphs = content.split('\n').filter(l => l.trim());
+  return { title: ch.title || '', paragraphs };
+}
+
+// ─── GENERIC FALLBACK ────────────────────────────────────────────────────────
+async function genericFetchBookInfo(url) {
+  const html = await proxyText(url);
+  const dom = new DOMParser().parseFromString(html, 'text/html');
+  const title = dom.querySelector('h1')?.textContent?.trim() || dom.title || 'Unknown';
+
+  // Try to find chapter links — look for anchor patterns
+  const allLinks = [...dom.querySelectorAll('a[href]')];
+  const chapterLinks = allLinks
+    .filter(a => {
+      const text = a.textContent.trim().toLowerCase();
+      const href = a.href;
+      return (text.match(/ch(apter)?\.?\s*\d+|episode\s*\d+|prologue|epilogue/i) ||
+              href.match(/ch(apter)?\/?(\d+)|ep\/?(\d+)/i)) && href !== url;
+    })
+    .map(a => ({
+      id: a.href,
+      title: a.textContent.trim() || a.href.split('/').pop(),
+      url: a.href
+    }));
+
+  const unique = [...new Map(chapterLinks.map(c => [c.url, c])).values()];
+
+  return {
+    site: 'generic',
+    title,
+    author: dom.querySelector('[rel="author"]')?.textContent?.trim() || 'Unknown',
+    description: dom.querySelector('meta[name="description"]')?.content || '',
+    coverUrl: null,
+    chapterCount: unique.length,
+    total: unique.length,
+    chapters: unique
+  };
+}
+
+async function genericFetchChapter(url) {
+  const html = await proxyText(url);
+  const dom = new DOMParser().parseFromString(html, 'text/html');
+
+  // Remove nav/script/style
+  ['nav','header','footer','script','style','aside'].forEach(tag => {
+    dom.querySelectorAll(tag).forEach(el => el.remove());
+  });
+
+  const title = dom.querySelector('h1, h2')?.textContent?.trim() || '';
+  const content = dom.querySelector('article, [class*="chapter"], [class*="content"], main') || dom.body;
+  const paras = [...(content?.querySelectorAll('p') || [])]
+    .map(p => p.textContent.trim())
+    .filter(t => t.length > 10);
+
+  return { title, paragraphs: paras };
+}
+
+// ─── ROUTER ──────────────────────────────────────────────────────────────────
+async function fetchBookInfo(url) {
+  const site = detectSite(url);
+  setChips(site);
+  if (site === 'zenithtls') return ztFetchBookInfo(url);
+  if (site === 'peachtea') return ptFetchBookInfo(url);
+  return genericFetchBookInfo(url);
+}
+
+async function fetchChapterContent(chapter, site) {
+  if (site === 'zenithtls') return ztFetchChapter(chapter.url);
+  if (site === 'peachtea') return ptFetchChapter(chapter.url);
+  return genericFetchChapter(chapter.url);
+}
+
+// ─── EPUB BUILDER ────────────────────────────────────────────────────────────
+function escXml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+async function buildEpub(info, chapters) {
+  const zip = new JSZip();
+  const uid = `bindery-${Date.now()}`;
+
+  zip.file('mimetype', 'application/epub+zip', { compression: 'STORE', compressionOptions: { level: 0 } });
+
+  zip.folder('META-INF').file('container.xml',
+`<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`);
+
+  const oebps = zip.folder('OEBPS');
+
+  oebps.file('style.css',
+`body{font-family:Georgia,"Times New Roman",serif;margin:1.5em 2em;line-height:1.75;font-size:1em}
+h1{font-size:1.3em;text-align:center;margin-bottom:2em;font-weight:600}
+p{text-indent:1.5em;margin:.35em 0}
+p:first-of-type{text-indent:0}`);
+
+  const ids = [];
+  for (let i = 0; i < chapters.length; i++) {
+    const ch = chapters[i];
+    const fileId = `ch_${String(i + 1).padStart(4, '0')}`;
+    ids.push({ fileId, title: ch.title });
+
+    const bodyContent = ch.paragraphs.map(p => `  <p>${escXml(p)}</p>`).join('\n');
+    oebps.file(`${fileId}.xhtml`,
+`<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>${escXml(ch.title)}</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+  <h1>${escXml(ch.title)}</h1>
+${bodyContent}
+</body>
+</html>`);
+  }
+
+  oebps.file('content.opf',
+`<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="BookId">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>${escXml(info.title)}</dc:title>
+    <dc:creator opf:role="aut">${escXml(info.author)}</dc:creator>
+    <dc:language>en</dc:language>
+    <dc:identifier id="BookId">${uid}</dc:identifier>
+    <dc:description>${escXml(info.description)}</dc:description>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="css" href="style.css" media-type="text/css"/>
+${ids.map(c => `    <item id="${c.fileId}" href="${c.fileId}.xhtml" media-type="application/xhtml+xml"/>`).join('\n')}
+  </manifest>
+  <spine toc="ncx">
+${ids.map(c => `    <itemref idref="${c.fileId}"/>`).join('\n')}
+  </spine>
+</package>`);
+
+  oebps.file('toc.ncx',
+`<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="${uid}"/>
+    <meta name="dtb:depth" content="1"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle><text>${escXml(info.title)}</text></docTitle>
+  <navMap>
+${ids.map((c, i) => `    <navPoint id="${c.fileId}" playOrder="${i + 1}">
+      <navLabel><text>${escXml(c.title)}</text></navLabel>
+      <content src="${c.fileId}.xhtml"/>
+    </navPoint>`).join('\n')}
+  </navMap>
+</ncx>`);
+
+  return zip.generateAsync({
+    type: 'blob',
+    mimeType: 'application/epub+zip',
+    compression: 'DEFLATE',
+    compressionOptions: { level: 6 }
+  });
+}
+
+// ─── MAIN FLOW ───────────────────────────────────────────────────────────────
+async function lookupBook() {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) return;
+
+  document.getElementById('lookupBtn').disabled = true;
+  document.getElementById('logBox').innerHTML = '';
+  hideCard('bookCard');
+  showCard('progressCard');
+  hideCard('saveBtn');
+  document.getElementById('stopBtn').classList.add('hidden');
+  setProgress(0, 1);
+  setProgressText('Looking up book…');
+
+  try {
+    log(`Fetching: ${url}`, 'info');
+    bookInfo = await fetchBookInfo(url);
+    log(`Found: ${bookInfo.title} — ${bookInfo.chapterCount} free chapters`, 'ok');
+
+    // Populate book card
+    document.getElementById('bookTitle').textContent = bookInfo.title;
+    document.getElementById('bookAuthor').textContent = bookInfo.author;
+    document.getElementById('bookDesc').textContent = bookInfo.description || '';
+
+    const meta = document.getElementById('bookMeta');
+    meta.innerHTML = '';
+    const addPill = (text, hi) => {
+      const p = document.createElement('span');
+      p.className = 'meta-pill' + (hi ? ' highlight' : '');
+      p.textContent = text;
+      meta.appendChild(p);
+    };
+    addPill(`${bookInfo.chapterCount} chapters`, true);
+    addPill(bookInfo.site);
+    if (bookInfo.tags) addPill(bookInfo.tags);
+
+    const coverEl = document.getElementById('coverEl');
+    if (bookInfo.coverUrl) {
+      coverEl.innerHTML = `<img src="${bookInfo.coverUrl}" alt="cover" onerror="this.parentElement.innerHTML='<span class=book-cover-placeholder>📖</span>'"/>`;
+    }
+
+    setProgress(1, 1);
+    setProgressText('Ready');
+    showCard('bookCard');
+  } catch (err) {
+    log(`Error: ${err.message}`, 'err');
+    setProgressText('Lookup failed');
+    console.error(err);
+  }
+
+  document.getElementById('lookupBtn').disabled = false;
+}
+
+async function startDownload() {
+  if (!bookInfo || isFetching) return;
+
+  isFetching = true;
+  shouldStop = false;
+  fetchedChapters = [];
+  document.getElementById('logBox').innerHTML = '';
+  document.getElementById('stopBtn').classList.remove('hidden');
+  document.getElementById('saveBtn').classList.add('hidden');
+  document.getElementById('downloadBtn').disabled = true;
+  showCard('progressCard');
+
+  const total = bookInfo.chapters.length;
+  const d = getDelay();
+  let failed = 0;
+
+  setProgressText('Fetching chapters…');
+  log(`Starting download: ${total} chapters`, 'info');
+
+  for (let i = 0; i < bookInfo.chapters.length; i++) {
+    if (shouldStop) { log('Stopped by user.', 'warn'); break; }
+
+    const ch = bookInfo.chapters[i];
+    setProgress(i, total);
+    setProgressText(`Chapter ${i + 1} of ${total}…`);
+
+    try {
+      const content = await fetchChapterContent(ch, bookInfo.site);
+      fetchedChapters.push({
+        title: content.title || ch.title,
+        paragraphs: content.paragraphs
+      });
+      if ((i + 1) % 10 === 0 || i === 0 || i === total - 1) {
+        log(`Chapter ${i + 1}/${total}: ${content.title || ch.title}`, 'ok');
+      }
+    } catch (err) {
+      failed++;
+      log(`Chapter ${i + 1} failed: ${err.message}`, 'err');
+      fetchedChapters.push({ title: ch.title, paragraphs: [`[Failed to fetch: ${err.message}]`] });
+    }
+
+    if (i < bookInfo.chapters.length - 1) await delay(d);
+  }
+
+  setProgress(total, total);
+
+  if (fetchedChapters.length === 0) {
+    log('No chapters downloaded. Check your proxy or auth token.', 'err');
+    setProgressText('Download failed');
+  } else {
+    log(`Building EPUB (${fetchedChapters.length} chapters, ${failed} failed)…`, 'info');
+    setProgressText('Building EPUB…');
+
+    try {
+      epubBlob = await buildEpub(bookInfo, fetchedChapters);
+      const mb = (epubBlob.size / 1024 / 1024).toFixed(2);
+      log(`EPUB ready — ${mb} MB`, 'ok');
+      setProgressText('Done!');
+
+      // Auto-save
+      saveEpub();
+      document.getElementById('saveBtn').classList.remove('hidden');
+    } catch (err) {
+      log(`EPUB build failed: ${err.message}`, 'err');
+      console.error(err);
+    }
+  }
+
+  isFetching = false;
+  document.getElementById('stopBtn').classList.add('hidden');
+  document.getElementById('downloadBtn').disabled = false;
+}
+
+function saveEpub() {
+  if (!epubBlob) return;
+  const filename = `${bookInfo.title.replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '_')}.epub`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(epubBlob);
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+}
+
+function stopFetching() {
+  shouldStop = true;
+  log('Stop requested — finishing current chapter…', 'warn');
+}
+
+function resetAll() {
+  bookInfo = null;
+  fetchedChapters = [];
+  epubBlob = null;
+  hideCard('bookCard');
+  hideCard('progressCard');
+  document.getElementById('urlInput').value = '';
+  document.getElementById('logBox').innerHTML = '';
+  ['zenithtls', 'peachtea'].forEach(s => document.getElementById(`chip-${s}`).classList.remove('active'));
+}
+
+// Enter key on URL input
+document.getElementById('urlInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') lookupBook();
+});
+</script>
